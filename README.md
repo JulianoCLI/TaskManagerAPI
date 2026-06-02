@@ -1,45 +1,136 @@
 # TaskManager API
 
-Uma API simples para gerenciamento de tarefas, criada para fins de estudo sobre desenvolvimento backend com Java e Spring Boot.
+Uma API simples para gerenciamento de tarefas, criada para fins de estudo sobre desenvolvimento backend com Java e Spring Boot utilizando Arquitetura Hexagonal.
 
-## O que é?
-Este projeto é um gerenciador de tarefas (CRUD) que permite criar, listar, atualizar e excluir tarefas. Foi desenvolvido para praticar conceitos de arquitetura limpa e organização de código.
+## Install
 
-## Stack Técnica
-- **Linguagem:** Java 25
-- **Framework:** Spring Boot 4.0.6
-- **Gerenciador de Dependências:** Maven
-- **Documentação:** Spring REST Docs (Asciidoctor)
-- **Outras bibliotecas:** Lombok, Spring Validation, JUnit 5
+Certifique-se de ter o **JDK 25** instalado.
 
-## Estrutura do Projeto
-O projeto utiliza uma abordagem baseada em **Arquitetura Hexagonal** (ou Ports and Adapters) para manter a lógica de negócio isolada:
+```bash
+git clone https://github.com/JulianoCLI/TaskManagerAPI.git
+cd TaskManagerAPI
+./mvnw clean install
+```
 
-- `domain`: Contém as entidades de negócio (Task, TaskId) e a interface do repositório.
-- `application`: Contém os Casos de Uso (Use Cases) que executam as regras de negócio.
-- `infrastructure`: Contém as implementações técnicas:
-    - `http`: Controladores REST, Requests e Responses.
-    - `repository`: Implementação de persistência em memória (`InMemoryTaskRepository`).
+## Run the app
 
-## Como rodar o projeto
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/JulianoCLI/TaskManagerAPI.git
-   ```
-2. Entre na pasta do projeto e compile com o Maven:
-   ```bash
-   ./mvnw clean install
-   ```
-3. Execute a aplicação:
-   ```bash
-   ./mvnw spring-boot:run
-   ```
-4. A API estará disponível em `http://localhost:8080/tasks`.
+```bash
+./mvnw spring-boot:run
+```
+A API estará disponível em `http://localhost:8080/tasks`.
 
-## Documentação
-A documentação da API é gerada automaticamente através dos testes com o **Spring REST Docs**.
+## Run the tests
 
-- **Como gerar:** Execute o comando `./mvnw package`. O HTML será gerado em `target/generated-docs/index.html`.
-- **Como acessar:** Com a aplicação rodando (`./mvnw spring-boot:run`), você pode visualizar a documentação técnica diretamente no navegador através do endereço:
-  `http://localhost:8080/docs/index.html`
+Para rodar os testes e gerar a documentação técnica (Spring REST Docs):
 
+```bash
+./mvnw test
+```
+A documentação gerada poderá ser acessada em `http://localhost:8080/docs/index.html` com a aplicação rodando, ou visualizando o arquivo `target/generated-docs/index.html`.
+
+## REST API
+
+A API REST para o TaskManager está descrita abaixo.
+
+### Create a Task
+
+#### Request
+`POST /tasks`
+```bash
+curl -i -X POST http://localhost:8080/tasks \
+     -H "Content-Type: application/json" \
+     -d '{"title": "Estudar Java", "description": "Ler documentação do Java 25"}'
+```
+
+#### Response
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Estudar Java",
+  "description": "Ler documentação do Java 25",
+  "status": "TODO"
+}
+```
+
+### List all Tasks
+
+#### Request
+`GET /tasks`
+```bash
+curl -i http://localhost:8080/tasks
+```
+
+#### Response
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "title": "Estudar Java",
+    "description": "Ler documentação do Java 25",
+    "status": "TODO"
+  }
+]
+```
+
+### Get a Task by ID
+
+#### Request
+`GET /tasks/:id`
+```bash
+curl -i http://localhost:8080/tasks/550e8400-e29b-41d4-a716-446655440000
+```
+
+#### Response
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Estudar Java",
+  "description": "Ler documentação do Java 25",
+  "status": "TODO"
+}
+```
+
+### Update a Task
+
+#### Request
+`PATCH /tasks/:id`
+```bash
+curl -i -X PATCH http://localhost:8080/tasks/550e8400-e29b-41d4-a716-446655440000 \
+     -H "Content-Type: application/json" \
+     -d '{"status": "DONE"}'
+```
+
+#### Response
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Estudar Java",
+  "description": "Ler documentação do Java 25",
+  "status": "DONE"
+}
+```
+
+### Delete a Task
+
+#### Request
+`DELETE /tasks/:id`
+```bash
+curl -i -X DELETE http://localhost:8080/tasks/550e8400-e29b-41d4-a716-446655440000
+```
+
+#### Response
+```http
+HTTP/1.1 204 No Content
+```
