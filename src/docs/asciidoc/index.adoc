@@ -1,0 +1,38 @@
+= TaskManager API Documentation
+:toc: left
+:sectnums:
+
+== Introdução
+API simples para gerenciamento de tarefas (Tasks), desenvolvida com Spring Boot e seguindo princípios de Arquitetura Hexagonal.
+
+== Endpoints
+
+=== Criar Tarefa
+Cria uma nova tarefa no sistema.
+
+==== Exemplo de Requisição
+include::{snippets}/create-task/http-request.adoc[]
+
+==== Campos da Requisição
+include::{snippets}/create-task/request-fields.adoc[]
+
+==== Exemplo de Resposta
+include::{snippets}/create-task/http-response.adoc[]
+
+==== Campos da Resposta
+include::{snippets}/create-task/response-fields.adoc[]
+
+=== Buscar Tarefa por ID
+Recupera os detalhes de uma tarefa específica.
+
+==== Parâmetros de Path
+include::{snippets}/get-task-by-id/path-parameters.adoc[]
+
+==== Exemplo de Requisição
+include::{snippets}/get-task-by-id/http-request.adoc[]
+
+==== Exemplo de Resposta
+include::{snippets}/get-task-by-id/http-response.adoc[]
+
+==== Campos da Resposta
+include::{snippets}/get-task-by-id/response-fields.adoc[]
