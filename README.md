@@ -37,4 +37,9 @@ O projeto utiliza uma abordagem baseada em **Arquitetura Hexagonal** (ou Ports a
 4. A API estará disponível em `http://localhost:8080/tasks`.
 
 ## Documentação
-A documentação da API pode ser gerada através dos testes com o Spring REST Docs. Após rodar o comando `mvn package`, o HTML gerado fica disponível na pasta `target/generated-docs`.
+A documentação da API é gerada automaticamente através dos testes com o **Spring REST Docs**.
+
+- **Como gerar:** Execute o comando `./mvnw package`. O HTML será gerado em `target/generated-docs/index.html`.
+- **Como acessar:** Com a aplicação rodando (`./mvnw spring-boot:run`), você pode visualizar a documentação técnica diretamente no navegador através do endereço:
+  `http://localhost:8080/docs/index.html`
+
